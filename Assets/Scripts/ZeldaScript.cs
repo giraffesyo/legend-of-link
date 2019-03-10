@@ -18,11 +18,20 @@ public class ZeldaScript : MonoBehaviour {
 	public bool grounded = true;
 	public EdgeCollider2D edCol;
 
-	void Start () {
+    public Camera cam;
+    private CameraControl camControl;
+    private Vector3 totalMove;
+    private float camMargin;
+
+    void Start () {
 
 		clipInfo = anim.GetCurrentAnimatorClipInfo(0);
 		rb = this.GetComponent<Rigidbody2D> ();
-	}
+
+        totalMove = Vector3.zero;
+        camControl = cam.GetComponent<CameraControl>();
+        camMargin = cam.pixelWidth / 3;
+    }
 
 	// Update is called once per frame
 	void Update ()
@@ -57,16 +66,20 @@ public class ZeldaScript : MonoBehaviour {
 			grounded = false;
 		}
 		else if(Input.GetKey(KeyCode.RightArrow)){
-			transform.position += Vector3.right * speed * Time.deltaTime;
-			if (!directionRight) {
+			Vector3 changeRight= Vector3.right * speed * Time.deltaTime;
+            totalMove += changeRight;
+            transform.position += changeRight;
+            if (!directionRight) {
 				directionRight = true;
 				transform.RotateAround (transform.position, transform.up, 180f);
 			}
 			anim.Play("Running");
 		}
 		else if (Input.GetKey (KeyCode.LeftArrow)) {
-			transform.position += Vector3.left * speed * Time.deltaTime;
-			if (directionRight) {
+			Vector3 changeLeft= Vector3.left * speed * Time.deltaTime;
+            //totalMove += changeLeft;
+            transform.position += changeLeft;
+            if (directionRight) {
 				directionRight = false;
 				transform.RotateAround (transform.position, transform.up, 180f);
 			}
@@ -80,7 +93,19 @@ public class ZeldaScript : MonoBehaviour {
 		}
 
 	}
-	void OnCollisionEnter2D(Collision2D col)
+
+    void LateUpdate()
+    {
+        Vector3 playerPos = cam.WorldToScreenPoint(this.transform.position);
+        if (playerPos.x > camMargin)
+        {
+            camControl.Adjust(totalMove);
+
+        }
+        totalMove = Vector3.zero;
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
 	{
 		Debug.Log("OnCollisionEnter2D");
 		if (col.otherCollider.Equals (edCol)) {
