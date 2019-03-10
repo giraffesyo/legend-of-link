@@ -52,7 +52,7 @@ public class ZeldaScript : MonoBehaviour {
 			zeldaHitbox.enabled = true;
 			swordAttackBox.enabled = false;
 			anim.Play ("Idle");
-		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
+		} else if (Input.GetKeyDown (KeyCode.UpArrow) && grounded) {
 			rb.AddForce(Vector2.up * jumpHeight);
 			grounded = false;
 		}
