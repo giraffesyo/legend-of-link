@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private AnimatorClipInfo[] clipInfo;
     private Animator anim;
     private Rigidbody2D rb2d;
-    private bool grounded = false;
+    private bool grounded = true;
 
     private bool jump = false;
     private bool facingRight = true;
@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     {
         // Get references to the components on player
         anim = GetComponent<Animator>();
-        collider = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
 
         clipInfo = anim.GetCurrentAnimatorClipInfo(0);
@@ -41,6 +40,7 @@ public class PlayerController : MonoBehaviour
         // Determine if we're currently on the ground using a line cast towards the ground
 
         grounded = Physics2D.Linecast(transform.position, groundcheck.position, groundLayer);
+
 
 
         if (grounded && Input.GetButtonDown("Jump"))
@@ -133,6 +133,9 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
+        anim.SetFloat("Speed", Mathf.Abs(moveHorizontal));
+        anim.SetBool("grounded", grounded);
+        
 
         if (moveHorizontal * rb2d.velocity.x < maxSpeed)
         {
@@ -145,21 +148,26 @@ public class PlayerController : MonoBehaviour
             // clamp the max speed in x direction
             rb2d.velocity = new Vector2(Mathf.Sign(rb2d.velocity.x) * maxSpeed, rb2d.velocity.y);
         }
-        if (hideFlags > 0 && !facingRight)
+        if (moveHorizontal > 0 && !facingRight)
         {
             Flip();
         }
-        else if (hideFlags < 0 && facingRight)
+        else if (moveHorizontal < 0 && facingRight)
         {
             Flip();
         }
-
+        if (grounded)
+        {
+            anim.SetBool("jump", false);
+        }
         if (jump)
         {
-            anim.SetTrigger("Jump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
             jump = false;
+            anim.SetBool("jump", jump);
         }
+        // Turn off jump when we land
+
 
     }
 

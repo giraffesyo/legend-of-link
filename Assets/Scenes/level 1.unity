@@ -14744,8 +14744,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6366770203820773063, guid: c78a3da806292b548b0aae6c98d070d3,
         type: 3}
-      propertyPath: groundLayer.m_Bits
-      value: 256
+      propertyPath: groundcheck
+      value: 
+      objectReference: {fileID: 2025923807}
+    - target: {fileID: 6366770203820773063, guid: c78a3da806292b548b0aae6c98d070d3,
+        type: 3}
+      propertyPath: jumpForce
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366770203820773063, guid: c78a3da806292b548b0aae6c98d070d3,
+        type: 3}
+      propertyPath: moveForce
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6366770203820773063, guid: c78a3da806292b548b0aae6c98d070d3,
+        type: 3}
+      propertyPath: maxSpeed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c78a3da806292b548b0aae6c98d070d3, type: 3}
@@ -20103,6 +20118,12 @@ Transform:
   m_Father: {fileID: 606844011}
   m_RootOrder: 48
   m_LocalEulerAnglesHint: {x: 0, y: 180.00002, z: 55.511}
+--- !u!4 &2025923807 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 703826181218393058, guid: c78a3da806292b548b0aae6c98d070d3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1553125289}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2026207077
 GameObject:
   m_ObjectHideFlags: 0
