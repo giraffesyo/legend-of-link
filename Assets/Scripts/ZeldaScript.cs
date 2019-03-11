@@ -6,7 +6,7 @@ public class ZeldaScript : MonoBehaviour {
 
 	// Use this for initialization
 	public int jumpHeight = 5;
-	public bool isJumping;
+	private bool isJumping;
 	public Animator anim;
 	public BoxCollider2D zeldaHitbox;
 	public Rigidbody2D rb;
