@@ -77,7 +77,7 @@ public class ZeldaScript : MonoBehaviour {
 		}
 		else if (Input.GetKey (KeyCode.LeftArrow)) {
 			Vector3 changeLeft= Vector3.left * speed * Time.deltaTime;
-            //totalMove += changeLeft;
+            totalMove += changeLeft;
             transform.position += changeLeft;
             if (directionRight) {
 				directionRight = false;
@@ -99,6 +99,10 @@ public class ZeldaScript : MonoBehaviour {
         Vector3 playerPos = cam.WorldToScreenPoint(this.transform.position);
         if (playerPos.x > camMargin)
         {
+            if (totalMove.x < 0)
+            {
+                totalMove.x = totalMove.x * -.25f;
+            }
             camControl.Adjust(totalMove);
 
         }
