@@ -16,8 +16,8 @@ public class ZeldaScript : MonoBehaviour {
 	private bool directionRight = true;
 	private AnimatorClipInfo[] clipInfo;
 	public bool grounded = true;
-	public EdgeCollider2D edCol;
-
+    public LayerMask groundLayer;
+    public Transform groundcheck;
     public Camera cam;
     private CameraControl camControl;
     private Vector3 totalMove;
@@ -45,7 +45,9 @@ public class ZeldaScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
 	{
-		if (!grounded && rb.velocity.y<0){
+        grounded = Physics2D.Linecast(transform.position, groundcheck.position, groundLayer);
+
+        if (!grounded && rb.velocity.y<0){
 			swordAttackBox.enabled = false;
 			anim.Play("Falling");
 			if (Input.GetKey (KeyCode.RightArrow)) {
@@ -117,14 +119,7 @@ public class ZeldaScript : MonoBehaviour {
         totalMove = Vector3.zero;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-	{
-		//Debug.Log("OnCollisionEnter2D");
-		if (col.otherCollider.Equals (edCol)) {
-			//anim.Play ("Landing");
-			grounded = true;
-		}
-	}
+
 
     void OnTriggerEnter2D(Collider2D other)
     {
