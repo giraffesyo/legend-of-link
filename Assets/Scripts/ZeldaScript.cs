@@ -48,6 +48,7 @@ public class ZeldaScript : MonoBehaviour {
         grounded = Physics2D.Linecast(transform.position, groundcheck.position, groundLayer);
 
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
+        bool moveUp = Input.GetButtonDown("Jump");
 
         if (!grounded && rb.velocity.y<0){
 			swordAttackBox.enabled = false;
@@ -74,7 +75,7 @@ public class ZeldaScript : MonoBehaviour {
 			zeldaHitbox.enabled = true;
 			swordAttackBox.enabled = false;
 			anim.Play ("Idle");
-		} else if (Input.GetKeyDown (KeyCode.UpArrow)&& grounded) {
+		} else if (moveUp && grounded) {
 			rb.AddForce(Vector2.up * jumpHeight);
 			grounded = false;
 		}
