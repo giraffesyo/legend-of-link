@@ -47,16 +47,18 @@ public class ZeldaScript : MonoBehaviour {
 	{
         grounded = Physics2D.Linecast(transform.position, groundcheck.position, groundLayer);
 
+        float moveHorizontal = Input.GetAxisRaw("Horizontal");
+
         if (!grounded && rb.velocity.y<0){
 			swordAttackBox.enabled = false;
 			anim.Play("Falling");
-			if (Input.GetKey (KeyCode.RightArrow)) {
+			if (moveHorizontal > 0 ) {
 				transform.position += Vector3.right * speed * Time.deltaTime;
 				if (!directionRight) {
 					directionRight = true;
 					transform.RotateAround (transform.position, transform.up, 180f);
 				}
-			} else if (Input.GetKey (KeyCode.LeftArrow)) {
+			} else if (moveHorizontal < 0) {
 				transform.position += Vector3.left * speed * Time.deltaTime;
 				if (directionRight) {
 					directionRight = false;
@@ -76,7 +78,7 @@ public class ZeldaScript : MonoBehaviour {
 			rb.AddForce(Vector2.up * jumpHeight);
 			grounded = false;
 		}
-		else if(Input.GetKey(KeyCode.RightArrow)){
+		else if(moveHorizontal > 0){
 			Vector3 changeRight= Vector3.right * speed * Time.deltaTime;
             totalMove += changeRight;
             transform.position += changeRight;
@@ -86,7 +88,7 @@ public class ZeldaScript : MonoBehaviour {
 			}
 			anim.Play("Running");
 		}
-		else if (Input.GetKey (KeyCode.LeftArrow)) {
+		else if (moveHorizontal < 0 ) {
 			Vector3 changeLeft= Vector3.left * speed * Time.deltaTime;
             totalMove += changeLeft;
             transform.position += changeLeft;
