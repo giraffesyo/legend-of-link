@@ -119,7 +119,7 @@ public class ZeldaScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
 	{
-		Debug.Log("OnCollisionEnter2D");
+		//Debug.Log("OnCollisionEnter2D");
 		if (col.otherCollider.Equals (edCol)) {
 			//anim.Play ("Landing");
 			grounded = true;

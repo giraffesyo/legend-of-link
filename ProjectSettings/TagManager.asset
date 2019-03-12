@@ -9,6 +9,7 @@ TagManager:
   - TeleportBack
   - TeleportOut
   - FreezeCamera
+  - Blue
   layers:
   - Default
   - TransparentFX
