@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Background
+  - TeleportIn
+  - TeleportBack
+  - TeleportOut
+  - FreezeCamera
   layers:
   - Default
   - TransparentFX

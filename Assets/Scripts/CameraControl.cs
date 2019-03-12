@@ -13,10 +13,17 @@ public class CameraControl : MonoBehaviour
     private Color baseColor;
     private bool darker;
     private Color currentColor;
+    private bool teleport;
+    private Vector3 teleportVector;
+    private bool cameraLeft;
+    public bool freezeCamera;
+    static float t = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
+        freezeCamera = false;
+        teleport = false;
         darker = true;
         cam = GetComponent<Camera>();
         Color baseColor = new Color(0, 198, 255);
@@ -53,8 +60,26 @@ public class CameraControl : MonoBehaviour
 
     public void Adjust(Vector3 shift)
     {
-        transform.position = transform.position + shift;
+        if (!freezeCamera)
+        {
+            if (!cameraLeft && shift.x < 0)
+            {
+                shift.x = shift.x * -.25f;
+            }
+            transform.position = transform.position + shift;
+        }
         //ChangeBackground(shift);
+    }
+
+    public void Teleport(Vector3 teleportVector)
+    {
+        this.teleportVector = teleportVector;
+        teleport = true;
+    }
+
+    public void CamMode(bool left)
+    {
+        cameraLeft = left;
     }
 
     public void ChangeBackground(Vector3 shift)
@@ -66,14 +91,24 @@ public class CameraControl : MonoBehaviour
         cam.backgroundColor = currentColor;
     }
 
+    public void AffixCamera()
+    {
+        freezeCamera = true;
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {
-        //if (player.transform.position.x > 0)
-        //{
-        //    Vector3 temp = player.transform.position;
-        //    temp.y = 0;
-        //    transform.position = temp + offset;
-        //}
+
+        if (teleport)
+        {
+            cam.transform.position += teleportVector;
+            teleport = false;
+        }
+        else if (freezeCamera)
+        {
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, 411, t), Mathf.Lerp(transform.position.y, 9, t), transform.position.z);
+            t += 0.020f * Time.deltaTime;
+        }
     }
 }

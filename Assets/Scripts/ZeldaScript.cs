@@ -22,15 +22,24 @@ public class ZeldaScript : MonoBehaviour {
     private CameraControl camControl;
     private Vector3 totalMove;
     private float camMargin;
+    private bool cameraLeft;
+
+    private AudioSource chime;
+    private AudioSource laugh;
 
     void Start () {
-
+        
 		clipInfo = anim.GetCurrentAnimatorClipInfo(0);
 		rb = this.GetComponent<Rigidbody2D> ();
 
         totalMove = Vector3.zero;
         camControl = cam.GetComponent<CameraControl>();
         camMargin = cam.pixelWidth / 3;
+        cameraLeft = false;
+
+        AudioSource[] temp = GetComponents<AudioSource>();
+        chime = temp[1];
+        laugh = temp[0];
     }
 
 	// Update is called once per frame
@@ -97,14 +106,13 @@ public class ZeldaScript : MonoBehaviour {
     void LateUpdate()
     {
         Vector3 playerPos = cam.WorldToScreenPoint(this.transform.position);
-        if (playerPos.x > camMargin)
+        if (!cameraLeft && playerPos.x > camMargin)
         {
-            if (totalMove.x < 0)
-            {
-                totalMove.x = totalMove.x * -.25f;
-            }
             camControl.Adjust(totalMove);
-
+        }
+        else if (cameraLeft)
+        {
+            camControl.Adjust(totalMove);
         }
         totalMove = Vector3.zero;
     }
@@ -118,4 +126,38 @@ public class ZeldaScript : MonoBehaviour {
 		}
 	}
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("TeleportIn"))
+        {
+            laugh.Play();
+            other.gameObject.SetActive(false);
+            Vector3 teleportVector = Vector3.down * 77.01f;
+            transform.position += teleportVector;
+            camControl.CamMode(true);
+            cameraLeft = true;
+            camControl.Teleport(teleportVector);
+        }
+        else if (other.gameObject.CompareTag("TeleportBack"))
+        {
+            laugh.Play();
+            Vector3 teleportVector = Vector3.left * 121.6f;
+            transform.position += teleportVector;
+            camControl.Teleport(teleportVector);
+        }
+        else if (other.gameObject.CompareTag("TeleportOut"))
+        {
+            chime.Play();
+            Vector3 teleportVector = Vector3.right * 61f;
+            teleportVector += Vector3.up * 77.1f;
+            transform.position += teleportVector;
+            camControl.CamMode(false);
+            cameraLeft = false;
+            camControl.Teleport(teleportVector);
+        }
+        else if (other.gameObject.CompareTag("FreezeCamera"))
+        {
+            camControl.AffixCamera();
+        }
+    }
 }
