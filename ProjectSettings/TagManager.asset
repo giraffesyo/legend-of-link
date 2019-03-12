@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Background
+  - TeleportIn
+  - TeleportBack
+  - TeleportOut
+  - FreezeCamera
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Background
+  - backstage
+  - enemies
+  - 
+  - stage
+  - zeldaHitBox
+  - sword
+  - player
+  - 
+  - 
+  - 
+  - 
+  - Foreground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 3289187569
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: backstage
+    uniqueID: 2149161779
+    locked: 0
+  - name: player
+    uniqueID: 3290774519
+    locked: 0
+  - name: stage
+    uniqueID: 3992972547
+    locked: 0
+  - name: Foreground
+    uniqueID: 1628337299
+    locked: 0
