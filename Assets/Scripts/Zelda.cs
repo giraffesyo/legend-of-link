@@ -255,6 +255,7 @@ public class Zelda : MonoBehaviour
                 chime.Play();
                 Vector3 teleportVector = new Vector3(61f, 77.1f, 0f);
                 transform.position += teleportVector;
+                camControl.CamMode(false);
                 cameraLeft = false;
                 camControl.Teleport(teleportVector);
             }
