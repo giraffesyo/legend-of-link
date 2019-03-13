@@ -22,8 +22,7 @@ public class Zelda : MonoBehaviour
 
     private AudioSource chime;
     private AudioSource laugh;
-    private bool teleported;
-    private float teleportedTimer;
+
     public Camera cam;
     private CameraControl camControl;
     private bool cameraLeft;                                 // can the camera move left
@@ -37,11 +36,6 @@ public class Zelda : MonoBehaviour
     public Transform groundcheck4;
     public LayerMask backstage;
     public LayerMask stage;
-
-    //Used to calculate teleport distance into lost woods
-    public GameObject teleportTakeOff;
-    public GameObject teleportLanding;
-    private Vector3 teleportDown;
 
     void Start()
     {
@@ -60,9 +54,6 @@ public class Zelda : MonoBehaviour
         Physics2D.IgnoreCollision(zeldaHitbox, swordAttackbox);
         Physics2D.IgnoreCollision(zeldaHitbox, edCol);
         Physics2D.IgnoreCollision(edCol, swordAttackbox);
-        teleportedTimer = 0;
-        teleported = false;
-        teleportDown = Vector3.down * (Mathf.Abs(teleportLanding.transform.position.y - teleportTakeOff.transform.position.y));
     }
 
     void Update()
@@ -118,16 +109,6 @@ public class Zelda : MonoBehaviour
             else
             {
                 anim.Play("Idle");
-            }
-
-            if (teleported)
-            {
-                teleportedTimer += Time.deltaTime;
-                if (teleportedTimer >= 1)
-                {
-                    teleported = false;
-                    teleportedTimer = 0;
-                }
             }
         }
 
@@ -246,50 +227,41 @@ public class Zelda : MonoBehaviour
         totalMove = Vector3.zero;
     }
 
+    private bool wrrryyyyyy = true;
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("TeleportIn"))
+        if (wrrryyyyyy)
         {
-            if (!teleported)
+            if (other.gameObject.CompareTag("TeleportIn"))
             {
                 laugh.Play();
                 other.gameObject.SetActive(false);
-                //Vector3 teleportVector = Vector3.down * 76f;
-                Vector3 teleportVector = teleportDown;
+                Vector3 teleportVector = Vector3.down * 77.01f;
                 transform.position += teleportVector;
                 camControl.CamMode(true);
                 cameraLeft = true;
                 camControl.Teleport(teleportVector);
-                teleported = true;
             }
-        }
-        else if (other.gameObject.CompareTag("TeleportBack"))
-        {
-            if (!teleported)
+            else if (other.gameObject.CompareTag("TeleportBack"))
             {
                 laugh.Play();
                 Vector3 teleportVector = Vector3.left * 121.6f;
                 transform.position += teleportVector;
                 camControl.Teleport(teleportVector);
-                teleported = true;
             }
-        }
-        else if (other.gameObject.CompareTag("TeleportOut"))
-        {
-            if (!teleported)
+            else if (other.gameObject.CompareTag("TeleportOut"))
             {
                 chime.Play();
                 Vector3 teleportVector = new Vector3(61f, 77.1f, 0f);
                 transform.position += teleportVector;
-                camControl.CamMode(false);
                 cameraLeft = false;
                 camControl.Teleport(teleportVector);
-                teleported = true;
             }
-        }
-        else if (other.gameObject.CompareTag("FreezeCamera"))
-        {
-            camControl.AffixCamera();
+            else if (other.gameObject.CompareTag("FreezeCamera"))
+            {
+                camControl.AffixCamera();
+            }
         }
     }
 }
