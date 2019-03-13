@@ -15,7 +15,6 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Physics.IgnoreLayerCollision(5, 12);
         if (this.gameObject.name.Equals("Red"))
         {
             redAnim = this.gameObject.GetComponent<Animator>();
