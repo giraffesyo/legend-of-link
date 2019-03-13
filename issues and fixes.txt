@@ -2,31 +2,34 @@ bugs:
 
 wasd controls will probably be broken again
 
-teleporting numbers (and camera) need tweaking (they were perfect, now they're not)
-
-the colliders attached to the camera push enemies off cliffs (need to have an ignore statement for colliders in enemy layer for camera)
-
 can't attack while running (easy fix probably)
 
+holding the attack button causes   'Zelda' AnimationEvent has no function name specified!   error
+
+zelda doesn't stay on moving platform
 
 
-fixes:
+
+fixed :
 
 infinite sprint
 infinite fall
 not being able to move while holding down
 clipping through ground when using weapon
 camera not following on teleport out
+the colliders attached to the camera push enemies off cliffs (need to have an ignore statement for colliders in enemy layer for camera)
+teleporting numbers (and camera) need tweaking (they were perfect, now they're not)
 
 
 added:
+
 ability to jump through platforms in the 'backstage' layer
 	can walk through bottom
 	top is either small box collider or edge collider
 
 stage layer is for pieces that the player cannot go through (in front of)
 
-^(these layers are changed at the top, by tags)
+^(these layers are changed at the top, near tags)
 
 
 
