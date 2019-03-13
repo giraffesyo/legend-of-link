@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Background
+  - TeleportIn
+  - TeleportBack
+  - TeleportOut
+  - FreezeCamera
+  - Blue
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - background
+  - 
+  - backstage
+  - 
+  - red
+  - 
+  - 
+  - player
+  - 
+  - stage
+  - 
+  - 
+  - foreground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 3289187569
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: backstage
+    uniqueID: 2014540231
+    locked: 0
+  - name: enemies
+    uniqueID: 1377840441
+    locked: 0
+  - name: player
+    uniqueID: 3186507757
+    locked: 0
+  - name: stage
+    uniqueID: 2099859645
+    locked: 0
+  - name: Foreground
+    uniqueID: 1628337299
+    locked: 0
