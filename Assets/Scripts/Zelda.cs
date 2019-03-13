@@ -22,7 +22,7 @@ public class Zelda : MonoBehaviour
 
     private AudioSource chime;
     private AudioSource laugh;
-
+    private bool teleportedIn;
     public Camera cam;
     private CameraControl camControl;
     private bool cameraLeft;                                 // can the camera move left
@@ -36,6 +36,11 @@ public class Zelda : MonoBehaviour
     public Transform groundcheck4;
     public LayerMask backstage;
     public LayerMask stage;
+
+    //Used to calculate teleport distance into lost woods
+    public GameObject teleportTakeOff;
+    public GameObject teleportLanding;
+    private Vector3 teleportDown;
 
     void Start()
     {
@@ -54,6 +59,9 @@ public class Zelda : MonoBehaviour
         Physics2D.IgnoreCollision(zeldaHitbox, swordAttackbox);
         Physics2D.IgnoreCollision(zeldaHitbox, edCol);
         Physics2D.IgnoreCollision(edCol, swordAttackbox);
+
+        teleportedIn = false;
+        teleportDown = Vector3.down * (Mathf.Abs(teleportLanding.transform.position.y - teleportTakeOff.transform.position.y));
     }
 
     void Update()
@@ -231,13 +239,18 @@ public class Zelda : MonoBehaviour
     {
         if (other.gameObject.CompareTag("TeleportIn"))
         {
-            laugh.Play();
-            other.gameObject.SetActive(false);
-            Vector3 teleportVector = Vector3.down * 76f;
-            transform.position += teleportVector;
-            camControl.CamMode(true);
-            cameraLeft = true;
-            camControl.Teleport(teleportVector);
+            if (!teleportedIn)
+            {
+                laugh.Play();
+                other.gameObject.SetActive(false);
+                //Vector3 teleportVector = Vector3.down * 76f;
+                Vector3 teleportVector = teleportDown;
+                transform.position += teleportVector;
+                camControl.CamMode(true);
+                cameraLeft = true;
+                camControl.Teleport(teleportVector);
+                teleportedIn = true;
+            }
         }
         else if (other.gameObject.CompareTag("TeleportBack"))
         {

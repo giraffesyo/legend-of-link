@@ -11637,6 +11637,12 @@ Transform:
   m_Father: {fileID: 1864765049}
   m_RootOrder: 54
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1255572931 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5771395536703944338, guid: 4bd703358388aa74d8bb2b5aaa0bd16f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1962234928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1256799272
 GameObject:
   m_ObjectHideFlags: 0
@@ -13895,7 +13901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1479909240}
   - component: {fileID: 1479909241}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: RightBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14413,6 +14419,16 @@ PrefabInstance:
       propertyPath: jumpHeight
       value: 600
       objectReference: {fileID: 0}
+    - target: {fileID: 362075789050249960, guid: c78a3da806292b548b0aae6c98d070d3,
+        type: 3}
+      propertyPath: teleportLanding
+      value: 
+      objectReference: {fileID: 1255572931}
+    - target: {fileID: 362075789050249960, guid: c78a3da806292b548b0aae6c98d070d3,
+        type: 3}
+      propertyPath: teleportTakeOff
+      value: 
+      objectReference: {fileID: 1911978215}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c78a3da806292b548b0aae6c98d070d3, type: 3}
 --- !u!1 &1560568464
@@ -17250,7 +17266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1848915165}
   - component: {fileID: 1848915166}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: LeftBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18152,6 +18168,12 @@ Transform:
   m_Father: {fileID: 606844011}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 307.192}
+--- !u!1 &1911978215 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5771395536703944338, guid: 4bd703358388aa74d8bb2b5aaa0bd16f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5771395537724434681}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1912071978
 GameObject:
   m_ObjectHideFlags: 0
@@ -18642,7 +18664,7 @@ PrefabInstance:
     - target: {fileID: 5771395536703944338, guid: 4bd703358388aa74d8bb2b5aaa0bd16f,
         type: 3}
       propertyPath: m_Name
-      value: LostWoodsPiece (2)
+      value: TeleportInLanding
       objectReference: {fileID: 0}
     - target: {fileID: 5771395536703944341, guid: 4bd703358388aa74d8bb2b5aaa0bd16f,
         type: 3}
@@ -21727,7 +21749,7 @@ PrefabInstance:
     - target: {fileID: 5771395536703944338, guid: 4bd703358388aa74d8bb2b5aaa0bd16f,
         type: 3}
       propertyPath: m_Name
-      value: LostWoodsPiece
+      value: TeleportInTakeOff
       objectReference: {fileID: 0}
     - target: {fileID: 5771395536703944341, guid: 4bd703358388aa74d8bb2b5aaa0bd16f,
         type: 3}
