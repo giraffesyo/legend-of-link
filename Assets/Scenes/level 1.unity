@@ -938,7 +938,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104500595}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9, y: 9.26, z: -1.2}
+  m_LocalPosition: {x: 277.1, y: 9.26, z: -1.2}
   m_LocalScale: {x: 7, y: 7, z: 0}
   m_Children:
   - {fileID: 1848915165}
@@ -13634,7 +13634,7 @@ PrefabInstance:
     - target: {fileID: 5771395536703944338, guid: 4bd703358388aa74d8bb2b5aaa0bd16f,
         type: 3}
       propertyPath: m_Name
-      value: LostWoodsPiece (5)
+      value: TeleportBackTakeOff
       objectReference: {fileID: 0}
     - target: {fileID: 5771395536703944341, guid: 4bd703358388aa74d8bb2b5aaa0bd16f,
         type: 3}
@@ -14327,7 +14327,7 @@ PrefabInstance:
     - target: {fileID: 6366770203820773056, guid: c78a3da806292b548b0aae6c98d070d3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.98
+      value: 277.1
       objectReference: {fileID: 0}
     - target: {fileID: 6366770203820773056, guid: c78a3da806292b548b0aae6c98d070d3,
         type: 3}

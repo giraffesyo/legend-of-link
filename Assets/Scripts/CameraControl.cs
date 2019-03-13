@@ -107,7 +107,7 @@ public class CameraControl : MonoBehaviour
         }
         else if (freezeCamera)
         {
-            transform.position = new Vector3(Mathf.Lerp(transform.position.x, 411, t), Mathf.Lerp(transform.position.y, 9, t), transform.position.z);
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, 405, t), Mathf.Lerp(transform.position.y, 9, t), transform.position.z);
             t += 0.020f * Time.deltaTime;
         }
     }
