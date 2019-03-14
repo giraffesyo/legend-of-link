@@ -41,7 +41,7 @@ NEED :
 		remove unnecessary objects
 		fix alignment of objects
 		make sure all backstage objects are in correct layer
-		make sure every other object that isnt foregroun/background is in stage layer
+		make sure every other object that isnt foreground/background is in stage layer
 			(not enemies / UI)
 		add background image ?
 		
