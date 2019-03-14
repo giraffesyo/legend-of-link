@@ -9,7 +9,7 @@ holding the attack button causes   'Zelda' AnimationEvent has no function name s
 zelda doesn't stay on moving platform
 
 Zelda.cs  :
-	OnCollisionEnter2D  /  Invincible  sometimes usually removes 2 hearts instead of 1
+	OnCollisionEnter2D  /  Invincible  usually removes 2 hearts instead of 1
 
 
 fixed :
