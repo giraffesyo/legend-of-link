@@ -121,16 +121,6 @@ public class Zelda : MonoBehaviour
             {
                 anim.Play("Idle");
             }
-
-            if (teleported)
-            {
-                teleportedTimer += Time.deltaTime;
-                if (teleportedTimer >= 1)
-                {
-                    teleported = false;
-                    teleportedTimer = 0;
-                }
-            }
         }
 
         else if (grounded == false && rb.velocity.y > 0)
@@ -225,6 +215,16 @@ public class Zelda : MonoBehaviour
                     transform.RotateAround(transform.position, transform.up, 180f);
                 }
                 anim.Play("Running");
+            }
+        }
+
+        if (teleported)
+        {
+            teleportedTimer += Time.deltaTime;
+            if (teleportedTimer >= 1)
+            {
+                teleported = false;
+                teleportedTimer = 0;
             }
         }
     }
