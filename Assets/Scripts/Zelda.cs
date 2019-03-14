@@ -9,6 +9,7 @@ public class Zelda : MonoBehaviour
     public float speed = 1.5f;
     public float airSpeed = 0.5f;                           // used to reduce movement speed in air
     //private Vector3 flip;                                 // not used currently
+    private int numHearts = 3;
 
     public bool grounded = true;
     private bool facingRight = true;
@@ -48,6 +49,13 @@ public class Zelda : MonoBehaviour
     //Amplifies force of knockback from being hit
     public float knockback;
 
+    // used for health
+    public GameObject heart1;
+    public GameObject heart2;
+    public GameObject heart3;
+
+    private bool playerDead = false;
+
     void Start()
     {
         clipinfo = anim.GetCurrentAnimatorClipInfo(0);       // idk
@@ -80,145 +88,153 @@ public class Zelda : MonoBehaviour
                     (Physics2D.Linecast(transform.position, groundcheck3.position, stage) || Physics2D.Linecast(transform.position, groundcheck3.position, backstage)) ||
                         (Physics2D.Linecast(transform.position, groundcheck4.position, stage) || Physics2D.Linecast(transform.position, groundcheck4.position, backstage))));
 
-        if (grounded == true)
+        if (playerDead)
         {
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            anim.Play("Zelda_Death");
+            zeldaHitbox.enabled = false;
+        }
+        else
+        {
+            if (grounded == true)
             {
-                grounded = false;
-                rb.AddForce(Vector3.up * jumpHeight);
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                Vector3 changeRight = Vector3.right * speed * Time.deltaTime;
-                totalMove += changeRight;
-                transform.position += changeRight;
-                if (!facingRight)
+                if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    facingRight = true;
-                    transform.RotateAround(transform.position, transform.up, 180f);
+                    grounded = false;
+                    rb.AddForce(Vector3.up * jumpHeight);
                 }
-                anim.Play("Running");
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                Vector3 changeLeft = Vector3.left * speed * Time.deltaTime;
-                totalMove += changeLeft;
-                transform.position += changeLeft;
-                if (facingRight)
+                else if (Input.GetKey(KeyCode.RightArrow))
                 {
-                    facingRight = false;
-                    transform.RotateAround(transform.position, transform.up, 180f);
+                    Vector3 changeRight = Vector3.right * speed * Time.deltaTime;
+                    totalMove += changeRight;
+                    transform.position += changeRight;
+                    if (!facingRight)
+                    {
+                        facingRight = true;
+                        transform.RotateAround(transform.position, transform.up, 180f);
+                    }
+                    anim.Play("Running");
                 }
-                anim.Play("Running");
+                else if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    Vector3 changeLeft = Vector3.left * speed * Time.deltaTime;
+                    totalMove += changeLeft;
+                    transform.position += changeLeft;
+                    if (facingRight)
+                    {
+                        facingRight = false;
+                        transform.RotateAround(transform.position, transform.up, 180f);
+                    }
+                    anim.Play("Running");
+                }
+                else if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    swordAttackbox.enabled = true;
+                    anim.Play("Attacking");
+                }
+                else if (Input.GetKeyUp(KeyCode.DownArrow))
+                {
+                    swordAttackbox.enabled = false;
+                    anim.Play("Idle");
+                }
+                else
+                {
+                    anim.Play("Idle");
+                }
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+
+            else if (grounded == false && rb.velocity.y > 0)
             {
-                swordAttackbox.enabled = true;
-                anim.Play("Attacking");
+                // in air, going up
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    Vector3 changeRight = Vector3.right * speed * Time.deltaTime * airSpeed;
+                    //Vector3 changeRight = Vector3.right * speed * Time.deltaTime;
+                    transform.position += changeRight;
+                    totalMove += changeRight;
+
+                    if (!facingRight)
+                    {
+                        facingRight = true;
+                        transform.RotateAround(transform.position, transform.up, 180f);
+                    }
+                }
+                else if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    Vector3 changeLeft = Vector3.left * speed * Time.deltaTime * airSpeed;
+                    //Vector3 changeLeft = Vector3.left * speed * Time.deltaTime;
+                    transform.position += changeLeft;
+                    totalMove += changeLeft;
+
+                    if (facingRight)
+                    {
+                        facingRight = false;
+                        transform.RotateAround(transform.position, transform.up, 180f);
+                    }
+                }
+                else if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    swordAttackbox.enabled = true;
+                    anim.Play("Attacking");
+                }
+                else if (Input.GetKeyUp(KeyCode.DownArrow))
+                {
+                    swordAttackbox.enabled = false;
+                    anim.Play("Idle");
+                }
             }
-            else if (Input.GetKeyUp(KeyCode.DownArrow))
+
+            else if (grounded == false && rb.velocity.y < 0)
             {
+                // in air, falling
                 swordAttackbox.enabled = false;
-                anim.Play("Idle");
+                anim.Play("Falling");
+
+                if (Input.GetKey(KeyCode.RightArrow))
+                {
+                    Vector3 changeRight = Vector3.right * speed * Time.deltaTime * airSpeed;
+                    transform.position += changeRight;
+                    totalMove += changeRight;
+                }
+                else if (Input.GetKey(KeyCode.LeftArrow))
+                {
+                    Vector3 changeLeft = Vector3.left * speed * Time.deltaTime * airSpeed;
+                    transform.position += changeLeft;
+                    totalMove += changeLeft;
+                }
             }
             else
             {
                 anim.Play("Idle");
-            }
-        }
-
-        else if (grounded == false && rb.velocity.y > 0)
-        {
-            // in air, going up
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                Vector3 changeRight = Vector3.right * speed * Time.deltaTime * airSpeed;
-                //Vector3 changeRight = Vector3.right * speed * Time.deltaTime;
-                transform.position += changeRight;
-                totalMove += changeRight;
-
-                if (!facingRight)
+                grounded = true;
+                if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
-                    facingRight = true;
-                    transform.RotateAround(transform.position, transform.up, 180f);
+                    grounded = false;
+                    rb.AddForce(Vector3.up * jumpHeight);
                 }
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                Vector3 changeLeft = Vector3.left * speed * Time.deltaTime * airSpeed;
-                //Vector3 changeLeft = Vector3.left * speed * Time.deltaTime;
-                transform.position += changeLeft;
-                totalMove += changeLeft;
-
-                if (facingRight)
+                else if (Input.GetKey(KeyCode.RightArrow))
                 {
-                    facingRight = false;
-                    transform.RotateAround(transform.position, transform.up, 180f);
+                    Vector3 changeRight = Vector3.right * speed * Time.deltaTime;
+                    totalMove += changeRight;
+                    transform.position += changeRight;
+                    if (!facingRight)
+                    {
+                        facingRight = true;
+                        transform.RotateAround(transform.position, transform.up, 180f);
+                    }
+                    anim.Play("Running");
                 }
-            }
-            else if (Input.GetKey(KeyCode.DownArrow))
-            {
-                swordAttackbox.enabled = true;
-                anim.Play("Attacking");
-            }
-            else if (Input.GetKeyUp(KeyCode.DownArrow))
-            {
-                swordAttackbox.enabled = false;
-                anim.Play("Idle");
-            }
-        }
-
-        else if (grounded == false && rb.velocity.y < 0)
-        {
-            // in air, falling
-            swordAttackbox.enabled = false;
-            anim.Play("Falling");
-
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                Vector3 changeRight = Vector3.right * speed * Time.deltaTime * airSpeed;
-                transform.position += changeRight;
-                totalMove += changeRight;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                Vector3 changeLeft = Vector3.left * speed * Time.deltaTime * airSpeed;
-                transform.position += changeLeft;
-                totalMove += changeLeft;
-            }
-        }
-        else
-        {
-            anim.Play("Idle");
-            grounded = true;
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                grounded = false;
-                rb.AddForce(Vector3.up * jumpHeight);
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                Vector3 changeRight = Vector3.right * speed * Time.deltaTime;
-                totalMove += changeRight;
-                transform.position += changeRight;
-                if (!facingRight)
+                else if (Input.GetKey(KeyCode.LeftArrow))
                 {
-                    facingRight = true;
-                    transform.RotateAround(transform.position, transform.up, 180f);
+                    Vector3 changeLeft = Vector3.left * speed * Time.deltaTime;
+                    totalMove += changeLeft;
+                    transform.position += changeLeft;
+                    if (facingRight)
+                    {
+                        facingRight = false;
+                        transform.RotateAround(transform.position, transform.up, 180f);
+                    }
+                    anim.Play("Running");
                 }
-                anim.Play("Running");
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                Vector3 changeLeft = Vector3.left * speed * Time.deltaTime;
-                totalMove += changeLeft;
-                transform.position += changeLeft;
-                if (facingRight)
-                {
-                    facingRight = false;
-                    transform.RotateAround(transform.position, transform.up, 180f);
-                }
-                anim.Play("Running");
             }
         }
 
@@ -236,6 +252,8 @@ public class Zelda : MonoBehaviour
     void FixedUpdate()
     {
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("backstage"), rb.velocity.y > 0);
+
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("red"), playerDead);
     }
 
     private void LateUpdate()
@@ -252,6 +270,40 @@ public class Zelda : MonoBehaviour
         totalMove = Vector3.zero;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("red") && collision.otherCollider == zeldaHitbox)
+        {
+            StartCoroutine("Invincible");
+        }
+    }
+
+    // currently this code removes two hearts at once most of the time
+    IEnumerator Invincible()
+    {
+        if (numHearts == 1)
+        {
+            heart1.SetActive(false);
+            playerDead = true;
+            //disable player controls
+            //load game over UI
+        }
+        else if (numHearts == 2)
+        {
+            heart2.SetActive(false);
+            numHearts = 1;
+        }
+        else if (numHearts == 3)
+        {
+            heart3.SetActive(false);
+            numHearts = 2;
+        }
+        // can move the if / else statements ^ back up to the if loop in OnCollisionEnter2D if needed
+
+        zeldaHitbox.enabled = false;
+        yield return new WaitForSeconds(2f);
+        zeldaHitbox.enabled = true;
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {

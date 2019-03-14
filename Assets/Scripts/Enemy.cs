@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     private float timer=0;
     private int attackTime = 2;
     private Zelda player;
+    private bool facingLeft;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour
 
         }
         rb = this.gameObject.GetComponent<Rigidbody2D>();
+        facingLeft = true;
     }
     private IEnumerator Die()
     {
@@ -50,8 +52,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(notDead)
+        if (notDead)
+        {
             transform.Translate(Vector3.left * (speed * Time.deltaTime));
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -91,14 +95,22 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Enemy hit");
             if (timer >= attackTime)
             {
                 Attack();
                 timer = 0;
             }
-
         }
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("enemyBounds") || collision.collider.gameObject.layer == LayerMask.NameToLayer("red"))
+        {
+            transform.RotateAround(transform.position, transform.up, 180f);
+            StartCoroutine("Wait");
+        }
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(3f);
     }
 
     private void Attack()
