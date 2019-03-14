@@ -1,5 +1,61 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1543334280689316093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6359505047893495712}
+  - component: {fileID: 6493664269943132755}
+  m_Layer: 0
+  m_Name: Sword Collider
+  m_TagString: Sword
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6359505047893495712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543334280689316093}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.305, z: 0}
+  m_LocalScale: {x: 0.14285713, y: 0.14285713, z: 0}
+  m_Children: []
+  m_Father: {fileID: 6366770203820773056}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &6493664269943132755
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543334280689316093}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.15, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: 1.232449, y: -2.3727024}
+  - {x: 2.0576553, y: -2.245991}
+  - {x: 2.708173, y: -1.8176925}
+  - {x: 3.2274806, y: -1.1264272}
+  - {x: 3.3610938, y: -0.27904513}
+  - {x: 3.2319467, y: 0.61041313}
+  - {x: 2.69297, y: 1.2636191}
+  - {x: 1.9714291, y: 1.7452767}
+  - {x: 1.2720703, y: 1.8266041}
 --- !u!1 &1545949933798938224
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +194,7 @@ GameObject:
   - component: {fileID: 362075789050249960}
   m_Layer: 15
   m_Name: Zelda
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,6 +215,7 @@ Transform:
   - {fileID: 252309302952093872}
   - {fileID: 255103919932671211}
   - {fileID: 7335538296236670779}
+  - {fileID: 6359505047893495712}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -197,7 +254,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1108459539
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300032, guid: 9c955102e6d1998449d2ab3450aed322, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -283,7 +340,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6366770203820773057}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -327,7 +384,7 @@ MonoBehaviour:
   airSpeed: 1
   grounded: 1
   zeldaHitbox: {fileID: 6366770203820773067}
-  swordAttackbox: {fileID: 6366770203820773060}
+  swordAttackbox: {fileID: 6493664269943132755}
   edCol: {fileID: 6366770203820773065}
   rb: {fileID: 6366770203820773066}
   anim: {fileID: 6366770203820773061}
@@ -343,6 +400,9 @@ MonoBehaviour:
   stage:
     serializedVersion: 2
     m_Bits: 131072
+  teleportTakeOff: {fileID: 0}
+  teleportLanding: {fileID: 0}
+  knockback: 0
 --- !u!1 &8609973188630622867
 GameObject:
   m_ObjectHideFlags: 0

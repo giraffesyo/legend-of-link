@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class Zelda : MonoBehaviour
     private bool facingRight = true;
 
     public BoxCollider2D zeldaHitbox;
-    public CircleCollider2D swordAttackbox;
+    public EdgeCollider2D swordAttackbox;
     public EdgeCollider2D edCol;                            // used for zelda floor collider
     public Rigidbody2D rb;                                  // used for zelda rigid body
 
@@ -43,6 +44,9 @@ public class Zelda : MonoBehaviour
     public GameObject teleportTakeOff;
     public GameObject teleportLanding;
     private Vector3 teleportDown;
+
+    //Amplifies force of knockback from being hit
+    public float knockback;
 
     void Start()
     {
@@ -294,5 +298,14 @@ public class Zelda : MonoBehaviour
         {
             camControl.AffixCamera();
         }
+    }
+
+    public void Attack(Transform enemy)
+    {
+        Vector3 moveDirection = new Vector3(this.gameObject.transform.position.x - enemy.position.x, 0, 0);
+        moveDirection = Vector3.Normalize(moveDirection);
+        this.gameObject.transform.position += new Vector3(.5f * moveDirection.x, 0, 0);
+        moveDirection.y = 2;
+        rb.AddForce(moveDirection * knockback);
     }
 }

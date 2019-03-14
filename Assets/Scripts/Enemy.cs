@@ -11,10 +11,14 @@ public class Enemy : MonoBehaviour
     private Animator blueAnim;
     private bool notDead = true;
     private Rigidbody2D rb;
+    private float timer=0;
+    private int attackTime = 2;
+    private Zelda player;
 
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<Zelda>();
         if (this.gameObject.name.Equals("Red"))
         {
             redAnim = this.gameObject.GetComponent<Animator>();
@@ -37,6 +41,12 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -45,8 +55,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        if (collision.isTrigger);
+        if (collision.gameObject.CompareTag("Sword"))
         {
             if (this.gameObject.name.Equals("Red"))
             {
@@ -75,5 +84,25 @@ public class Enemy : MonoBehaviour
             }
 
         }
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Enemy hit");
+            if (timer >= attackTime)
+            {
+                Attack();
+                timer = 0;
+            }
+
+        }
+    }
+
+    private void Attack()
+    {
+        player.Attack(gameObject.transform);
     }
 }
