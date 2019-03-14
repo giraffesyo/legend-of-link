@@ -938,7 +938,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104500595}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 277.1, y: 9.26, z: -1.2}
+  m_LocalPosition: {x: 11.05, y: 9.26, z: -1.2}
   m_LocalScale: {x: 7, y: 7, z: 0}
   m_Children:
   - {fileID: 1848915165}
@@ -13901,7 +13901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1479909240}
   - component: {fileID: 1479909241}
-  m_Layer: 21
+  m_Layer: 25
   m_Name: RightBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14327,7 +14327,7 @@ PrefabInstance:
     - target: {fileID: 6366770203820773056, guid: c78a3da806292b548b0aae6c98d070d3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 277.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6366770203820773056, guid: c78a3da806292b548b0aae6c98d070d3,
         type: 3}
@@ -14389,16 +14389,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 7
       objectReference: {fileID: 0}
-    - target: {fileID: 6366770203820773063, guid: c78a3da806292b548b0aae6c98d070d3,
-        type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 104500599}
-    - target: {fileID: 6366770203820773063, guid: c78a3da806292b548b0aae6c98d070d3,
-        type: 3}
-      propertyPath: groundcheck
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6366770203820773066, guid: c78a3da806292b548b0aae6c98d070d3,
         type: 3}
       propertyPath: m_GravityScale
@@ -14429,6 +14419,16 @@ PrefabInstance:
       propertyPath: teleportTakeOff
       value: 
       objectReference: {fileID: 1911978215}
+    - target: {fileID: 6366770203820773063, guid: c78a3da806292b548b0aae6c98d070d3,
+        type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 104500599}
+    - target: {fileID: 6366770203820773063, guid: c78a3da806292b548b0aae6c98d070d3,
+        type: 3}
+      propertyPath: groundcheck
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c78a3da806292b548b0aae6c98d070d3, type: 3}
 --- !u!1 &1560568464
@@ -17266,7 +17266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1848915165}
   - component: {fileID: 1848915166}
-  m_Layer: 21
+  m_Layer: 25
   m_Name: LeftBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
