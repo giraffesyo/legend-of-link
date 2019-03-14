@@ -1,35 +1,47 @@
-bugs:
+bugs  :
 
-wasd controls will probably be broken again
-
-can't attack while running (easy fix probably)
-
-holding the attack button causes   'Zelda' AnimationEvent has no function name specified!   error
-
-zelda doesn't stay on moving platform
+InputSettings  :
+	wasd controls are probably broken again
 
 
+Zelda.cs  /  PlatformControl.cs  :
+	zelda doesn't stay on moving platform
 
-fixed :
+Zelda.cs  :
+	OnCollisionEnter2D  /  Invincible  usually removes 2 hearts instead of 1
+	
+	can't attack while running (easy fix probably)
 
-infinite sprint
-infinite fall
-not being able to move while holding down
-clipping through ground when using weapon
-camera not following on teleport out
-the colliders attached to the camera push enemies off cliffs (need to have an ignore statement for colliders in enemy layer for camera)
-teleporting numbers (and camera) need tweaking (they were perfect, now they're not)
-
-
-added:
-
-ability to jump through platforms in the 'backstage' layer
-	can walk through bottom
-	top is either small box collider or edge collider
-
-stage layer is for pieces that the player cannot go through (in front of)
-
-^(these layers are changed at the top, near tags)
+	holding the attack button causes :  'Zelda' AnimationEvent has no function name specified!   error
+	
+	
+Enemies get knocked over by zelda, need to change their physics settings so they don't move
+	and / or make zelda get knocked back by them
+	(increase mass in rigidbody maybe, (they might start pushing her though))
+	
+	
 
 
-
+DONE (unless level is changed):
+	base movement controls
+		(will probably still need to add a couple if conditions)
+		
+	lost woods teleporting
+	
+	camera movement 
+		(for level 1)
+	
+NEED :
+	UI Menu for Game Over
+	Level 2
+	Background Music
+	Death / Jumping Anim applied to Zelda.cs
+	Death conditions for cliff / no hearts  (there is a heart counter in the Zelda.cs script)
+	Cleaning Level 1
+		remove unnecessary objects
+		fix alignment of objects
+		make sure all backstage objects are in correct layer
+		make sure every other object that isnt foreground/background is in stage layer
+			(not enemies / UI)
+		add background image ?
+		

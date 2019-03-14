@@ -9,6 +9,7 @@ public class Zelda : MonoBehaviour
     public float speed = 1.5f;
     public float airSpeed = 0.5f;                           // used to reduce movement speed in air
     //private Vector3 flip;                                 // not used currently
+    private int numHearts = 3;
 
     public bool grounded = true;
     private bool facingRight = true;
@@ -47,6 +48,11 @@ public class Zelda : MonoBehaviour
 
     //Amplifies force of knockback from being hit
     public float knockback;
+
+    // used for health
+    public GameObject heart1;
+    public GameObject heart2;
+    public GameObject heart3;
 
     void Start()
     {
@@ -252,6 +258,42 @@ public class Zelda : MonoBehaviour
         totalMove = Vector3.zero;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("red") && collision.otherCollider == zeldaHitbox)
+        {
+            StartCoroutine("Invincible");
+        }
+    }
+
+    // currently this code removes two hearts at once most of the time
+    IEnumerator Invincible()
+    {
+        if (numHearts == 1)
+        {
+            heart1.SetActive(false);
+            /*
+             anim.play("Death");
+             (something to bring up game over screen)
+             
+            */
+        }
+        else if (numHearts == 2)
+        {
+            heart2.SetActive(false);
+            numHearts = 1;
+        }
+        else if (numHearts == 3)
+        {
+            heart3.SetActive(false);
+            numHearts = 2;
+        }
+        // can move the if / else statements ^ back up to the if loop in OnCollisionEnter2D if needed
+
+        zeldaHitbox.enabled = false;
+        yield return new WaitForSeconds(2f);
+        zeldaHitbox.enabled = true;
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
