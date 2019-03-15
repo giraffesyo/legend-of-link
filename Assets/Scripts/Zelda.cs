@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Zelda : MonoBehaviour
 {
@@ -20,11 +21,11 @@ public class Zelda : MonoBehaviour
     public Rigidbody2D rb;                                  // used for zelda rigid body
 
     public Animator anim;
-    private AnimatorClipInfo[] clipinfo;
 
     private AudioSource chime;
     private AudioSource laugh;
 
+    public Button restartbutton;
     public Camera cam;
     private CameraControl camControl;
     private bool cameraLeft;                                 // can the camera move left
@@ -32,6 +33,15 @@ public class Zelda : MonoBehaviour
     private Vector3 totalMove;                               // used to change camera position
     private bool teleported;
     private float teleportedTimer;
+
+    private Vector3 spawnpoint;                             //Onstart makes the place to put Zelda on death
+    private Vector3 cameraSpawn;
+   
+
+    public GameObject Enemies;
+    private GameObject hiddenEnemy;
+
+
 
     public Transform groundcheck;
     public Transform groundcheck1;
@@ -53,12 +63,20 @@ public class Zelda : MonoBehaviour
     public GameObject heart1;
     public GameObject heart2;
     public GameObject heart3;
+    public GameObject panelGameOver;
 
     private bool playerDead = false;
 
     void Start()
     {
-        clipinfo = anim.GetCurrentAnimatorClipInfo(0);       // idk
+        hiddenEnemy = Instantiate(Enemies);
+        hiddenEnemy.transform.parent = null;
+        hiddenEnemy.SetActive(false);
+        
+        Button restart = restartbutton.GetComponent<Button>();
+        restart.onClick.AddListener(Restart);
+        spawnpoint = this.gameObject.transform.position;
+        cameraSpawn = cam.transform.position;
         rb = this.GetComponent<Rigidbody2D>();               // gets the rigidbody of the object the script is attached to
 
         totalMove = Vector3.zero;                            // initialize camera pos modifier to 0
@@ -285,6 +303,8 @@ public class Zelda : MonoBehaviour
         {
             heart1.SetActive(false);
             playerDead = true;
+            panelGameOver.SetActive(true);
+            anim.Play("Death");
             //disable player controls
             //load game over UI
         }
@@ -350,8 +370,33 @@ public class Zelda : MonoBehaviour
         {
             camControl.AffixCamera();
         }
-    }
+        else if (other.gameObject.CompareTag("Respawn"))
+        {
+            
+            this.transform.position = spawnpoint;
+            cam.transform.position = cameraSpawn;
+            heart1.SetActive(false);
+            heart2.SetActive(false);
+            heart3.SetActive(false);
+            panelGameOver.SetActive(true);
+            playerDead = true;
 
+        }
+    }
+    public void Restart()
+    {
+        Destroy(Enemies);
+        Enemies = Instantiate(hiddenEnemy);
+        Enemies.transform.parent = null;
+        Enemies.SetActive(true);
+        playerDead = false;
+        heart1.SetActive(true);
+        heart2.SetActive(true);
+        heart3.SetActive(true);
+        numHearts = 3;
+        panelGameOver.SetActive(false);
+        
+    }
     public void Attack(Transform enemy)
     {
         Vector3 moveDirection = new Vector3(this.gameObject.transform.position.x - enemy.position.x, 0, 0);
