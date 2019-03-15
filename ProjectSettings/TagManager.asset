@@ -11,6 +11,7 @@ TagManager:
   - FreezeCamera
   - Blue
   - Sword
+  - Red
   layers:
   - Default
   - TransparentFX

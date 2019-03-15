@@ -20,13 +20,13 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<Zelda>();
-        if (this.gameObject.name.Equals("Red"))
+        if (this.gameObject.tag.Equals("Red"))
         {
             redAnim = this.gameObject.GetComponent<Animator>();
             redAnim.Play("EnemyWalk");
         }    
        
-        if (this.gameObject.name.Equals("Blue"))
+        if (this.gameObject.tag.Equals("Blue"))
         {
             blueAnim = this.gameObject.GetComponent<Animator>();
             blueAnim.Play("BlueWalk");
@@ -58,7 +58,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("Sword"))
         {
             Debug.Log("not working");
-            if (this.gameObject.name.Equals("Red"))
+            if (this.gameObject.tag.Equals("Red"))
             {
                 redAnim.Play("EnemyDeath");
                 Collider2D[] colliders = rb.GetComponents<Collider2D>();

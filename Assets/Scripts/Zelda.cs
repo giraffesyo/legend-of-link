@@ -27,7 +27,7 @@ public class Zelda : MonoBehaviour
 
     public Button restartbutton;
     public Camera cam;
-    private CameraControl camControl;
+    public CameraControl camControl;
     private bool cameraLeft;                                 // can the camera move left
     private float camMargin;                                 // used to determine when camera should move (relative to the player)
     private Vector3 totalMove;                               // used to change camera position
@@ -41,7 +41,7 @@ public class Zelda : MonoBehaviour
     public GameObject Enemies;
     private GameObject hiddenEnemy;
 
-
+    public GameObject victory;
 
     public Transform groundcheck;
     public Transform groundcheck1;
@@ -66,9 +66,10 @@ public class Zelda : MonoBehaviour
     public GameObject panelGameOver;
 
     private bool playerDead = false;
-
+    private bool playerWon = false;
     void Start()
     {
+        victory.gameObject.SetActive(false);
         hiddenEnemy = Instantiate(Enemies);
         hiddenEnemy.transform.parent = null;
         hiddenEnemy.SetActive(false);
@@ -80,7 +81,7 @@ public class Zelda : MonoBehaviour
         rb = this.GetComponent<Rigidbody2D>();               // gets the rigidbody of the object the script is attached to
 
         totalMove = Vector3.zero;                            // initialize camera pos modifier to 0
-        camControl = cam.GetComponent<CameraControl>();
+        //camControl = cam.GetComponent<CameraControl>();
         camMargin = cam.pixelWidth / 3;                      // higher # makes camera start moving sooner (relative to player)
         cameraLeft = false;
 
@@ -112,6 +113,10 @@ public class Zelda : MonoBehaviour
             panelGameOver.SetActive(true);
             this.transform.position = spawnpoint;
             cam.transform.position = cameraSpawn;
+        }
+        else if (playerWon)
+        {
+
         }
         else
         {
@@ -409,5 +414,14 @@ public class Zelda : MonoBehaviour
         this.gameObject.transform.position += new Vector3(.5f * moveDirection.x, 0, 0);
         moveDirection.y = 2;
         rb.AddForce(moveDirection * knockback);
+    }
+
+    public void Victory()
+    {
+        chime.Play();
+        anim.Play("Idle");
+        victory.gameObject.SetActive(true);
+        zeldaHitbox.enabled = false;
+        playerWon = true;
     }
 }

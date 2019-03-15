@@ -17894,7 +17894,12 @@ PrefabInstance:
         type: 3}
       propertyPath: victory
       value: 
-      objectReference: {fileID: 847424129}
+      objectReference: {fileID: 847424127}
+    - target: {fileID: 362075789050249960, guid: c78a3da806292b548b0aae6c98d070d3,
+        type: 3}
+      propertyPath: camControl
+      value: 
+      objectReference: {fileID: 104500596}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c78a3da806292b548b0aae6c98d070d3, type: 3}
 --- !u!1 &1560568464
