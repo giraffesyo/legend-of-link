@@ -21,12 +21,12 @@ TagManager:
   - 
   - 
   - background
-  - stompLayer
+  - 
   - backstage
   - 
   - red
   - enemyBounds
-  - 
+  - stompLayer
   - player
   - 
   - stage

@@ -14,11 +14,9 @@ public class Enemy : MonoBehaviour
     private float timer=0;
     private int attackTime = 2;
     private Zelda player;
-    private bool facingLeft;
 
-    //public GameObject redStompCollider;
+    private CapsuleCollider2D circle;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectsWithTag("Player")[0].GetComponent<Zelda>();
@@ -26,25 +24,18 @@ public class Enemy : MonoBehaviour
         {
             redAnim = this.gameObject.GetComponent<Animator>();
             redAnim.Play("EnemyWalk");
-        }
-             
+        }    
        
         if (this.gameObject.name.Equals("Blue"))
         {
             blueAnim = this.gameObject.GetComponent<Animator>();
             blueAnim.Play("BlueWalk");
-
-
         }
         rb = this.gameObject.GetComponent<Rigidbody2D>();
-        facingLeft = true;
-
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("stompLayer"), LayerMask.NameToLayer("stage"));
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("stompLayer"), LayerMask.NameToLayer("backstage"));
+        circle = GetComponentInChildren<CapsuleCollider2D>();
     }
     private IEnumerator Die()
     {
-        
         yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
@@ -66,6 +57,7 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Sword"))
         {
+            Debug.Log("not working");
             if (this.gameObject.name.Equals("Red"))
             {
                 redAnim.Play("EnemyDeath");
@@ -81,7 +73,6 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-
                 blueAnim.Play("BlueKnockback&Die");
                 Collider2D[] colliders = rb.GetComponents<Collider2D>();
 
@@ -93,9 +84,7 @@ public class Enemy : MonoBehaviour
                 notDead = false;
                 StartCoroutine(Die());
             }
-
         }
-        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -107,17 +96,24 @@ public class Enemy : MonoBehaviour
                 Attack();
                 timer = 0;
             }
+            else if (collision.otherCollider.Equals(circle))
+            {
+                redAnim.Play("EnemyDeath");
+                Collider2D[] colliders = rb.GetComponents<Collider2D>();
+
+                foreach (Collider2D g in colliders)
+                {
+                    rb.gravityScale = 0;
+                    g.enabled = false;
+                }
+                notDead = false;
+                StartCoroutine(Die());
+            }
         }
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("enemyBounds") || collision.collider.gameObject.layer == LayerMask.NameToLayer("red"))
         {
             transform.RotateAround(transform.position, transform.up, 180f);
-            StartCoroutine("Wait");
         }
-    }
-    
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(3f);
     }
     
     private void Attack()

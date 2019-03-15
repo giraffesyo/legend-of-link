@@ -118,7 +118,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0013943799, y: 0.00000014156103}
+  m_Offset: {x: -0.0013943762, y: -0.0069861617}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -129,7 +129,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.15030888, y: 0.10788612}
+  m_Size: {x: 0.15030888, y: 0.09391351}
   m_EdgeRadius: 0
 --- !u!95 &26718337061705707
 Animator:
@@ -174,7 +174,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4146319791810774758}
-  - component: {fileID: 3893374714471156633}
+  - component: {fileID: 6209167520852287632}
   m_Layer: 14
   m_Name: stomp Hitbox
   m_TagString: Untagged
@@ -196,8 +196,8 @@ Transform:
   m_Father: {fileID: 8464923662099946605}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &3893374714471156633
-CircleCollider2D:
+--- !u!70 &6209167520852287632
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -209,6 +209,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.015}
-  serializedVersion: 2
-  m_Radius: 0.06
+  m_Offset: {x: -0.0004906416, y: 0.02747569}
+  m_Size: {x: 0.082404904, y: 0.13204956}
+  m_Direction: 0

@@ -24,9 +24,6 @@ public class Zelda : MonoBehaviour
 
     private AudioSource chime;
     private AudioSource laugh;
-    private AudioSource hit;
-    private AudioSource death;
-    private AudioSource backgroundMusic;
 
     public Button restartbutton;
     public Camera cam;
@@ -90,9 +87,6 @@ public class Zelda : MonoBehaviour
         AudioSource[] sounds = GetComponents<AudioSource>(); // renamed becuase not really temp
         chime = sounds[1];
         laugh = sounds[0];
-        hit = sounds[2];
-        death = sounds[3];
-        backgroundMusic = sounds[4];
 
         Physics2D.IgnoreCollision(zeldaHitbox, swordAttackbox);
         Physics2D.IgnoreCollision(zeldaHitbox, edCol);
@@ -115,6 +109,9 @@ public class Zelda : MonoBehaviour
         if (playerDead)
         {
             anim.Play("Zelda_Death");
+            panelGameOver.SetActive(true);
+            this.transform.position = spawnpoint;
+            cam.transform.position = cameraSpawn;
         }
         else
         {
@@ -297,22 +294,19 @@ public class Zelda : MonoBehaviour
     {
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("red") && collision.otherCollider == zeldaHitbox)
         {
+            //prevents you from stomping enemy when they walk through you
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("stompLayer"), LayerMask.NameToLayer("player"));
             StartCoroutine("Invincible");
         }
     }
 
     IEnumerator Invincible()
     {
-        hit.Play();
         if (numHearts == 1)
         {
             zeldaHitbox.enabled = false;
             heart1.SetActive(false);
             playerDead = true;
-            backgroundMusic.Stop();
-            death.Play();
-            //disable player controls
-            //load game over UI
         }
         else if (numHearts == 2)
         {
@@ -332,6 +326,7 @@ public class Zelda : MonoBehaviour
             yield return new WaitForSeconds(2f);
             zeldaHitbox.enabled = true;
         }
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("stompLayer"), LayerMask.NameToLayer("player"), false);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -404,6 +399,7 @@ public class Zelda : MonoBehaviour
         heart3.SetActive(true);
         numHearts = 3;
         panelGameOver.SetActive(false);
+        zeldaHitbox.enabled = true;
         
     }
     public void Attack(Transform enemy)
@@ -413,6 +409,5 @@ public class Zelda : MonoBehaviour
         this.gameObject.transform.position += new Vector3(.5f * moveDirection.x, 0, 0);
         moveDirection.y = 2;
         rb.AddForce(moveDirection * knockback);
-
     }
 }
