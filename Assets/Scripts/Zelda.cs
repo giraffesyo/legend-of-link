@@ -24,6 +24,9 @@ public class Zelda : MonoBehaviour
 
     private AudioSource chime;
     private AudioSource laugh;
+    private AudioSource hit;
+    private AudioSource death;
+    private AudioSource backgroundMusic;
 
     public Button restartbutton;
     public Camera cam;
@@ -87,6 +90,9 @@ public class Zelda : MonoBehaviour
         AudioSource[] sounds = GetComponents<AudioSource>(); // renamed becuase not really temp
         chime = sounds[1];
         laugh = sounds[0];
+        hit = sounds[2];
+        death = sounds[3];
+        backgroundMusic = sounds[4];
 
         Physics2D.IgnoreCollision(zeldaHitbox, swordAttackbox);
         Physics2D.IgnoreCollision(zeldaHitbox, edCol);
@@ -297,11 +303,14 @@ public class Zelda : MonoBehaviour
 
     IEnumerator Invincible()
     {
+        hit.Play();
         if (numHearts == 1)
         {
             zeldaHitbox.enabled = false;
             heart1.SetActive(false);
             playerDead = true;
+            backgroundMusic.Stop();
+            death.Play();
             //disable player controls
             //load game over UI
         }
@@ -404,5 +413,6 @@ public class Zelda : MonoBehaviour
         this.gameObject.transform.position += new Vector3(.5f * moveDirection.x, 0, 0);
         moveDirection.y = 2;
         rb.AddForce(moveDirection * knockback);
+
     }
 }
