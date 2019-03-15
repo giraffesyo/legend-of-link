@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     private Zelda player;
     private bool facingLeft;
 
+    //public GameObject redStompCollider;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,9 @@ public class Enemy : MonoBehaviour
         }
         rb = this.gameObject.GetComponent<Rigidbody2D>();
         facingLeft = true;
+
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("stompLayer"), LayerMask.NameToLayer("stage"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("stompLayer"), LayerMask.NameToLayer("backstage"));
     }
     private IEnumerator Die()
     {
@@ -64,20 +69,22 @@ public class Enemy : MonoBehaviour
             if (this.gameObject.name.Equals("Red"))
             {
                 redAnim.Play("EnemyDeath");
-                StartCoroutine(Die());
                 Collider2D[] colliders = rb.GetComponents<Collider2D>();
+                
                 foreach (Collider2D g in colliders)
                 {
                     rb.gravityScale = 0;
                     g.enabled = false;
                 }
                 notDead = false;
+                StartCoroutine(Die());
             }
             else
             {
 
                 blueAnim.Play("BlueKnockback&Die");
                 Collider2D[] colliders = rb.GetComponents<Collider2D>();
+
                 foreach(Collider2D g in colliders)
                 {
                     g.enabled = false;
@@ -107,12 +114,12 @@ public class Enemy : MonoBehaviour
             StartCoroutine("Wait");
         }
     }
-
+    
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(3f);
     }
-
+    
     private void Attack()
     {
         player.Attack(gameObject.transform);

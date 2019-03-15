@@ -109,7 +109,6 @@ public class Zelda : MonoBehaviour
         if (playerDead)
         {
             anim.Play("Zelda_Death");
-            zeldaHitbox.enabled = false;
         }
         else
         {
@@ -296,15 +295,13 @@ public class Zelda : MonoBehaviour
         }
     }
 
-    // currently this code removes two hearts at once most of the time
     IEnumerator Invincible()
     {
         if (numHearts == 1)
         {
+            zeldaHitbox.enabled = false;
             heart1.SetActive(false);
             playerDead = true;
-            panelGameOver.SetActive(true);
-            anim.Play("Death");
             //disable player controls
             //load game over UI
         }
@@ -312,17 +309,20 @@ public class Zelda : MonoBehaviour
         {
             heart2.SetActive(false);
             numHearts = 1;
+
+            zeldaHitbox.enabled = false;
+            yield return new WaitForSeconds(2f);
+            zeldaHitbox.enabled = true;
         }
         else if (numHearts == 3)
         {
             heart3.SetActive(false);
             numHearts = 2;
-        }
-        // can move the if / else statements ^ back up to the if loop in OnCollisionEnter2D if needed
 
-        zeldaHitbox.enabled = false;
-        yield return new WaitForSeconds(2f);
-        zeldaHitbox.enabled = true;
+            zeldaHitbox.enabled = false;
+            yield return new WaitForSeconds(2f);
+            zeldaHitbox.enabled = true;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
