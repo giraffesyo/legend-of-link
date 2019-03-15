@@ -27,6 +27,7 @@ public class Zelda : MonoBehaviour
     private AudioSource hit;
     private AudioSource death;
     private AudioSource backgroundMusic;
+    private AudioSource victoryMusic;
 
     public Button restartbutton;
     public Camera cam;
@@ -67,11 +68,15 @@ public class Zelda : MonoBehaviour
     public GameObject heart2;
     public GameObject heart3;
     public GameObject panelGameOver;
+    public Text victory;
 
     private bool playerDead = false;
+    private bool playerWon = false;
 
     void Start()
     {
+        victory.gameObject.SetActive(false);
+
         hiddenEnemy = Instantiate(Enemies);
         hiddenEnemy.transform.parent = null;
         hiddenEnemy.SetActive(false);
@@ -93,6 +98,7 @@ public class Zelda : MonoBehaviour
         hit = sounds[2];
         death = sounds[3];
         backgroundMusic = sounds[4];
+        victoryMusic = sounds[5];
 
         Physics2D.IgnoreCollision(zeldaHitbox, swordAttackbox);
         Physics2D.IgnoreCollision(zeldaHitbox, edCol);
@@ -115,6 +121,10 @@ public class Zelda : MonoBehaviour
         if (playerDead)
         {
             anim.Play("Zelda_Death");
+        }
+        else if (playerWon)
+        {
+
         }
         else
         {
@@ -299,6 +309,10 @@ public class Zelda : MonoBehaviour
         {
             StartCoroutine("Invincible");
         }
+        if (collision.gameObject.name == "Crystal")
+        {
+            Victory();
+        }
     }
 
     IEnumerator Invincible()
@@ -311,6 +325,7 @@ public class Zelda : MonoBehaviour
             playerDead = true;
             backgroundMusic.Stop();
             death.Play();
+            RestartMenuAppear();
             //disable player controls
             //load game over UI
         }
@@ -381,19 +396,27 @@ public class Zelda : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Respawn"))
         {
-            
-            this.transform.position = spawnpoint;
-            cam.transform.position = cameraSpawn;
             heart1.SetActive(false);
             heart2.SetActive(false);
             heart3.SetActive(false);
-            panelGameOver.SetActive(true);
-            playerDead = true;
+            RestartMenuAppear();
 
         }
     }
+    public void RestartMenuAppear()
+    {
+        backgroundMusic.Stop();
+        death.Play();
+        this.transform.position = spawnpoint;
+        cam.transform.position = cameraSpawn;
+        panelGameOver.SetActive(true);
+        playerDead = true;
+    }
+
     public void Restart()
     {
+        death.Stop();
+        backgroundMusic.Play();
         Destroy(Enemies);
         Enemies = Instantiate(hiddenEnemy);
         Enemies.transform.parent = null;
@@ -404,7 +427,8 @@ public class Zelda : MonoBehaviour
         heart3.SetActive(true);
         numHearts = 3;
         panelGameOver.SetActive(false);
-        
+        zeldaHitbox.enabled = true;
+
     }
     public void Attack(Transform enemy)
     {
@@ -414,5 +438,16 @@ public class Zelda : MonoBehaviour
         moveDirection.y = 2;
         rb.AddForce(moveDirection * knockback);
 
+    }
+
+    public void Victory()
+    {
+        chime.Play();
+        anim.Play("Idle");
+        backgroundMusic.Stop();
+        victoryMusic.Play();
+        victory.gameObject.SetActive(true);
+        zeldaHitbox.enabled = false;
+        playerWon = true;
     }
 }

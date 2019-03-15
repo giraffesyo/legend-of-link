@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1277662296880864617}
   m_Layer: 12
   m_Name: Red
-  m_TagString: Untagged
+  m_TagString: Red
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,7 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4146319791810774758}
   - component: {fileID: 3893374714471156633}
-  m_Layer: 14
+  m_Layer: 9
   m_Name: stomp Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
